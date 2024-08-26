@@ -15,7 +15,7 @@ type ReqDependency struct {
 	Version string
 }
 
-// ParseReqDeps parses requirements.txt and compares it with the SBOM (malware-detection.json)
+// ParseReqDeps parses requirements.txt and compares it with the SBOM (sbom.json)
 func ParseReqDeps(manifest cyclonedx.SBOM, reqFile string) {
 	reqDependencies, err := parseRequirements(reqFile)
 	if err != nil {

@@ -7,7 +7,7 @@
             "request": "launch",
             "mode": "auto",
             "program": "${fileDirname}",
-            "args": ["malware-detection.json", "package-lock.json"]
+            "args": ["sbom.json", "package-lock.json"]
         }
     ]
 }

@@ -19,15 +19,15 @@ func main() {
 	bomManifest := os.Args[2]
 	dependencyFile := os.Args[3]
 
-	// Read and unmarshal malware-detection.json
+	// Read and unmarshal sbom.json
 	sbomFile, err := os.ReadFile(bomManifest)
 	if err != nil {
-		log.Fatalf("Failed to read malware-detection.json: %v", err)
+		log.Fatalf("Failed to read sbom.json: %v", err)
 	}
 	var sbom cyclonedx.SBOM
 	err = json.Unmarshal(sbomFile, &sbom)
 	if err != nil {
-		log.Fatalf("Failed to unmarshal malware-detection.json: %v", err)
+		log.Fatalf("Failed to unmarshal sbom.json: %v", err)
 	}
 
 	switch os.Args[1] {

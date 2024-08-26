@@ -15,7 +15,7 @@ type SumDependency struct {
 	Version string
 }
 
-// ParseGoDeps parses go.sum and compares it with the SBOM (malware-detection.json)
+// ParseGoDeps parses go.sum and compares it with the SBOM (sbom.json)
 func ParseGoDeps(manifest cyclonedx.SBOM, goSumFile string) {
 	sumDependencies, err := parseGoSum(goSumFile)
 	if err != nil {

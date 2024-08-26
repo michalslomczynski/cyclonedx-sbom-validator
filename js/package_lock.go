@@ -53,7 +53,7 @@ func ParsePackageLock(manifest cyclonedx.SBOM, packageLockFile string) {
 	// Track which dependencies are checked
 	checkedInPackageLock := make(map[string]bool)
 
-	// Check for components in malware-detection.json that are missing or mismatched in package-lock.json
+	// Check for components in sbom.json that are missing or mismatched in package-lock.json
 	for _, component := range manifest.BuildManifest.Manifest.Components {
 		packageVersion, exists := normalizedDependencies[component.Name]
 		if !exists {
@@ -64,7 +64,7 @@ func ParsePackageLock(manifest cyclonedx.SBOM, packageLockFile string) {
 		checkedInPackageLock[component.Name] = true
 	}
 
-	// Check for dependencies in package-lock.json that are missing in malware-detection.json
+	// Check for dependencies in package-lock.json that are missing in sbom.json
 	for pkgName := range normalizedDependencies {
 		if !checkedInPackageLock[pkgName] {
 			missingInMalwareDetection = append(missingInMalwareDetection, pkgName)
@@ -73,27 +73,27 @@ func ParsePackageLock(manifest cyclonedx.SBOM, packageLockFile string) {
 
 	// Output results
 	if len(missingInPackageLock) > 0 {
-		fmt.Println("Packages present in malware-detection.json but missing in package-lock.json:")
+		fmt.Println("Packages present in sbom.json but missing in package-lock.json:")
 		for _, pkg := range missingInPackageLock {
 			fmt.Printf("  - %s\n", pkg)
 		}
 	}
 
 	if len(missingInMalwareDetection) > 0 {
-		fmt.Println("Packages present in package-lock.json but missing in malware-detection.json:")
+		fmt.Println("Packages present in package-lock.json but missing in sbom.json:")
 		for _, pkg := range missingInMalwareDetection {
 			fmt.Printf("  - %s\n", pkg)
 		}
 	}
 
 	if len(versionMismatches) > 0 {
-		fmt.Println("Version mismatches between malware-detection.json and package-lock.json:")
+		fmt.Println("Version mismatches between sbom.json and package-lock.json:")
 		for _, mismatch := range versionMismatches {
 			fmt.Printf("  - %s\n", mismatch)
 		}
 	}
 
 	if len(missingInPackageLock) == 0 && len(missingInMalwareDetection) == 0 && len(versionMismatches) == 0 {
-		fmt.Println("All packages and versions are coherent between malware-detection.json and package-lock.json.")
+		fmt.Println("All packages and versions are coherent between sbom.json and package-lock.json.")
 	}
 }
